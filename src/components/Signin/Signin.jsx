@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../Signin/signin.css"
 import { BrowserRouter as Router, Route, Link, NavLink, useNavigate } from "react-router-dom";
-import { logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithFacebook, signInWithGoogle } from "../../shared/firebase/firebase";
+import { getPhotographer, logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithFacebook, signInWithGoogle } from "../../shared/firebase/firebase";
 
 const Signin = () => {
     const [email, setEmail ] = useState("");
@@ -11,12 +11,21 @@ const Signin = () => {
     const handleSignIn = (e) => {
         e.preventDefault();
         logInWithEmailAndPassword(email, password)
+            .then((url) => {
+                console.log(url)
+                navigate(url)
+            })
+    }
+
+    const handleSignInWithGoogle = (e) => {
+        e.preventDefault();
+        signInWithGoogle()
             .then((userCredential) => {
-                if(userCredential.verified) {
-                    navigate(`/personal/${userCredential.user.uid}`)
-                } else {
-                    navigate('/payments')
-                }
+                console.log(userCredential)
+                getPhotographer(userCredential.uid).then(res => {
+                navigate(res)
+                })
+                
             })
     }
 
@@ -36,7 +45,7 @@ const Signin = () => {
             </div>
             <div className="signin_button">
                 <button onClick={handleSignIn}>Đăng nhập</button>
-                <button onClick={signInWithGoogle}>Sign in with Google</button>
+                <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
                 <button onClick={signInWithFacebook}>Sign in with Facebook</button>
             </div>
         </form>

@@ -31,8 +31,8 @@ const firebaseConfig = {
     storageBucket: "fotoviet-9e27e.appspot.com",
     messagingSenderId: "610913227926",
     appId: "1:610913227926:web:d3026ed2ced3df00275eb7"
-  };
-  
+};
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -45,33 +45,55 @@ googleProvider.setCustomParameters({
 });
 const facebookProvider = new FacebookAuthProvider();
 
-const signInWithGoogle = (e) => {
-    e.preventDefault();
-    signInWithPopup(auth, googleProvider)
-        .then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            const user = result.user;
-            console.log(user);
-            let role = prompt("Which role are you?")
-            addDoc(collection(db, "users"), {
-                uid: user.uid,
-                name: user.displayName ?? user.uid,
-                authProvider: "local",
-                email: user.email,
-                thumbnailUrl: user.photoURL,
-                role: role
-            });
-        }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-        });
+const signInWithGoogle = async () => {
+    const userCredentials = await signInWithPopup(auth, googleProvider)
+    const credential = GoogleAuthProvider.credentialFromResult(userCredentials);
+    const token = credential.accessToken;
+    const user = userCredentials.user;
+    console.log(user);
+    
+    let check = false;
+    let photographers = await getAllPhotographers();
+    console.log(photographers)
+    photographers.forEach((photographer) => {
+        if (photographer.uid == user.uid) check = true;
+    })
+    let urlRedirect = ""
+    if (check) {
+        urlRedirect = '/payments'
+    } else {
+        addDoc(collection(db, 'photographer'), {
+            uid: user.uid,
+            name: user.displayName ?? user.uid,
+            firstName: "",
+            lastName: user.displayName ?? user.uid,
+            accountName: `${user.displayName ?? user.uid} `,
+            nameInIDCard: "",
+            email: user.email ?? "",
+            thumbnailUrl: user.photoURL ?? `https://ui-avatars.com/api/${user.displayName ?? "A"}`,
+            follower: 0,
+            rating: 5.0,
+            pack: "",
+            connected: 0,
+            lastOrder: new Date(),
+            comments: [],
+            numberIDCard: "",
+            phone: "",
+            workLocations: [],
+            address: "",
+            instagram: "",
+            facebook: "",
+            introdution: "",
+            topics: [],
+            skills: [],
+            allowance: "",
+            images: [],
+            verified: false
+        },).then(() => {
+            urlRedirect = `/personal/${user.uid}`
+        })
+    }
+    return urlRedirect;
 };
 const logInWithEmailAndPassword = async (email, password) => {
     try {
