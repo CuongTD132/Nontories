@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../Signin/signin.css"
+import { UserContext } from '../../context/UserContext';
 import { BrowserRouter as Router, Route, Link, NavLink, useNavigate } from "react-router-dom";
-import { getPhotographer, logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithFacebook, signInWithGoogle } from "../../shared/firebase/firebase";
+import { getPhotographer, logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithFacebook, signInWithGoogle, authStateListener } from "../../shared/firebase/firebase";
 
 const Signin = () => {
     const [email, setEmail ] = useState("");
     const [password, setPassword ] = useState("");
+    const { updateUser } = useContext(UserContext);
 
     const navigate = useNavigate();
     const handleSignIn = (e) => {
@@ -13,6 +15,7 @@ const Signin = () => {
         logInWithEmailAndPassword(email, password)
             .then((url) => {
                 console.log(url)
+                updateUser(url);
                 navigate(url)
             })
     }
@@ -45,7 +48,7 @@ const Signin = () => {
             </div>
             <div className="signin_button">
                 <button onClick={handleSignIn}>Đăng nhập</button>
-                <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
+                <button >Sign in with Google</button>
                 <button onClick={signInWithFacebook}>Sign in with Facebook</button>
             </div>
         </form>

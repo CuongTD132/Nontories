@@ -15,7 +15,7 @@
 }
 
 .signin_account input{
-    width: 30%;
+    width: 400px;
     padding: 10px 20px;
     background-color: #EAF0F7;
     border-radius: 25px;
@@ -23,7 +23,7 @@
 }
 
 .signin_password input{
-    width: 30%;
+    width: 400px;
     padding: 10px 20px;
     background-color: #EAF0F7;
     border-radius: 25px;
@@ -48,8 +48,15 @@
     word-spacing: 3px;
     letter-spacing: 1px;
     border-radius: 25px;
+    margin: 0 10px;
 }
 
 .signin_button button:hover{
     cursor: pointer;
+}
+
+@media (max-width: 990px) {
+    .signin_button button{
+        margin: 10px 10px;
+    }
 }
