@@ -8,6 +8,7 @@ import {
     sendPasswordResetEmail,
     signOut,
     FacebookAuthProvider,
+    onAuthStateChanged ,
 } from "firebase/auth";
 import {
     getFirestore,
@@ -321,6 +322,16 @@ const getMultipleImages = async (link) => {
     return datas;
 }
 
+const authStateListener = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("User is signed in:", user);
+      // Perform actions or retrieve user information here
+    } else {
+      console.log("User is signed out");
+      // Perform actions when the user is signed out
+    }
+  });
+
 export {
     auth,
     db,
@@ -338,5 +349,6 @@ export {
     uploadFile,
     uploadMultipleFiles,
     getImage,
-    getMultipleImages
+    getMultipleImages,
+    authStateListener,
 };

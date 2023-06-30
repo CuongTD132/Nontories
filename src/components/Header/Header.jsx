@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/picture/fotovietIcon.png"
 import "./header.css"
-import { logout } from "../../shared/firebase/firebase";
+import { logout, authStateListener, } from "../../shared/firebase/firebase";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -11,6 +11,7 @@ const Header = () => {
         logout()
             .then(() => navigate("/signIn"))
     }
+    authStateListener()
     return (
         <div className="header">
             <div className="header_navigate">

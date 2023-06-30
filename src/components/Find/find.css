@@ -40,3 +40,35 @@
     color: white;
     font-weight: 5 00;
 }
+
+@media (max-width: 1300px) {
+
+    .find_section{
+        width: 20%;
+        padding: 20px 0;
+    }
+    
+    .find_button{
+        width: 100px;
+        margin: auto 0;
+        transform: translateX(20px);
+    }
+
+}
+
+@media (max-width: 1150px) {
+
+    .find{
+        width: 450px;
+        transform: translateX(40px) translateY(50px);
+    }
+
+}
+
+@media (max-width: 1050px) {
+
+    .find{
+        transform: translateX(40px) translateY(130px);
+    }
+
+}
