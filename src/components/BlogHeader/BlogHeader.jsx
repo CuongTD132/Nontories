@@ -12,7 +12,7 @@ import avt from "../../assets/picture/default_avt.jpg"
 import "./blogHeader.css"
 
 const BlogHeader = () => {
-    const { user, updateUser } = useContext(UserContext);
+    // const { user, updateUser } = useContext(UserContext);
     const navigate = useNavigate();
     const handleLogin = (e) => {
         e.preventDefault();
@@ -20,14 +20,16 @@ const BlogHeader = () => {
             .then(() => navigate("/signIn"))
     }
 
-    console.log(user);
+    const [user, setuser] = useState(null);
+    useEffect(() => {
+        setuser(JSON.parse(localStorage.getItem('user')))
+    }, [])
 
     const handleLogout = (e) => {
         e.preventDefault();
         logout()
-        
           .then(() => {
-            updateUser(null)
+            // updateUser(null)
             navigate("/signIn")
           })
           .catch((error) => {
@@ -68,10 +70,10 @@ const BlogHeader = () => {
                                 <div className="nav_header_avatar">
                                     <img
                                         className="header_navigate_face_icon"
-                                        src={avt}
+                                        src={user.thumbnailUrl}
                                         alt="Facebook"
                                     />
-                                    <span className="nav_header_username">{user.accountName}</span>
+                                    <span className="nav_header_username">{user.name}</span>
                                 </div>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../Signup/Signup.css"
 import SelectionDropdown from "../SelectionDropdown/SelectionDropdown";
-import { auth, logout, registerWithEmailAndPassword } from "../../shared/firebase/firebase";
+import { auth, getPhotographer, logout, registerWithEmailAndPassword } from "../../shared/firebase/firebase";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const select = {
@@ -30,14 +30,16 @@ const Signup = () => {
     const handleSignUp = (e) => {
         e.preventDefault();
         Promise.all([
-            logout(),
             registerWithEmailAndPassword(firstName, lastName, email, password, role)
                 .then((res) => {
-                        if(role == "Thợ chụp ảnh cần tìm kiếm khách hàng") {
-                            navigate(`/personal/${auth.currentUser.uid}/edit`)
-                        } else {
-                            navigate(`/personal/${auth.currentUser.uid}`)
-                        }
+                    if (role == "Thợ chụp ảnh cần tìm kiếm khách hàng") {
+                        getPhotographer(auth.currentUser.uid)
+                            .then(res => localStorage.setItem('user', JSON.stringify(res)));
+                        navigate(`/personal/${auth.currentUser.uid}/edit`)
+                    } else {
+                        alert("Not support this role")
+                        // navigate(`/personal/${auth.currentUser.uid}`)
+                    }
                 })
         ])
     }

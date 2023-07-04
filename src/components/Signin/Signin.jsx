@@ -1,37 +1,32 @@
 import React, { useState, useContext } from "react";
 import "../Signin/signin.css"
-import { UserContext } from '../../context/UserContext';
 import { BrowserRouter as Router, Route, Link, NavLink, useNavigate } from "react-router-dom";
-import { getPhotographer, logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithFacebook, signInWithGoogle, authStateListener } from "../../shared/firebase/firebase";
+import { getPhotographer, logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithFacebook, signInWithGoogle, authStateListener, auth } from "../../shared/firebase/firebase";
 
 const Signin = () => {
-    const [email, setEmail ] = useState("");
-    const [password, setPassword ] = useState("");
-    const { updateUser } = useContext(UserContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
     const handleSignIn = (e) => {
         e.preventDefault();
         logInWithEmailAndPassword(email, password)
-            .then((url) => {
-                console.log(url)
-                updateUser(url);
-                navigate(url)
+            .then((res) => {
+                getPhotographer(res.user.uid)
+                    .then((res) => localStorage.setItem('user', JSON.stringify(res)))
+                navigate(`/personal/${res.user.uid}`)
             })
     }
 
     const handleSignInWithGoogle = (e) => {
         e.preventDefault();
         signInWithGoogle()
-            .then((userCredential) => {
-                console.log(userCredential)
-                getPhotographer(userCredential.uid).then(res => {
-                navigate(res)
-                })
-                
+            .then(() => {
+                getPhotographer(auth.currentUser.uid)
+                    .then((res) => localStorage.setItem('user', JSON.stringify(res)))
+                navigate(`/personal/${auth.currentUser.uid}`)
             })
     }
-    const handleSignIn
 
     return (
         <form className="signin">

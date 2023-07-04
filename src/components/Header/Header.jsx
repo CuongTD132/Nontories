@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/picture/fotovietIcon.png"
 import "./header.css"
@@ -12,6 +12,19 @@ const Header = () => {
             .then(() => navigate("/signIn"))
     }
     authStateListener()
+
+    const handleLogout = (e) => {
+        e.preventDefault()
+        logout()
+            .then(() => {
+                navigate("/signIn")
+            })
+    }
+
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('user')));
+    }, [])
     return (
         <div className="header">
             <div className="header_navigate">
@@ -26,14 +39,25 @@ const Header = () => {
                     Blog
                 </Link>
             </div>
-            <div className="header_sign">
-                <Link onClick={handleLogin} to='/signIn' className="header_signin">
-                    Đăng nhập
+            {
+                user == {} &&
+                <>
+                    <div className="header_sign">
+                        <Link onClick={handleLogin} to='/signIn' className="header_signin">
+                            Đăng nhập
+                        </Link>
+                        <Link to='/signUp' className="header_signup">
+                            Đăng ký
+                        </Link>
+                    </div>
+                </>
+            }
+            {
+                user != {} &&
+                <Link to='/signIn' className="header_signup" onClick={handleLogout}>
+                    Đăng xuất
                 </Link>
-                <Link to='/signUp' className="header_signup">
-                    Đăng ký
-                </Link>
-            </div>
+            }
         </div>
     )
 }

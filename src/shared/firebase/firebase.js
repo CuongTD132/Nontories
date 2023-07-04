@@ -45,8 +45,7 @@ googleProvider.setCustomParameters({
     prompt: "select_account"
 });
 
-const signInWithGoogle = async (e) => {
-    e.preventDefault();
+const signInWithGoogle = async () => {
     const userCredentials = await signInWithPopup(auth, googleProvider)
     const credential = GoogleAuthProvider.credentialFromResult(userCredentials);
     const token = credential.accessToken;
@@ -166,6 +165,8 @@ const sendPasswordReset = async (email) => {
 };
 
 const logout = async () => {
+    window.location.reload();
+    localStorage.removeItem('user')
     return await signOut(auth);
 };
 

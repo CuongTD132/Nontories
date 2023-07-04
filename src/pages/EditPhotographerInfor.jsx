@@ -31,7 +31,7 @@ const EditPhotographerInfor = () => {
     const [comments, setComments] = useState([]);
     const [verified, setVerified] = useState(false);
 
-    const params = useParams();
+    const {userId} = useParams();
     const updateInfor = async () => {
         console.log(images)
         let index = 0;
@@ -55,8 +55,8 @@ const EditPhotographerInfor = () => {
                         [topics],
                         skills,
                         allowance,
-                        Array.from(images).map((item, key) => `foto-images/user-${auth.currentUser.uid}/topic-images/${key}`),
-                        `foto-images/user-${auth.currentUser.uid}`,
+                        Array.from(images).map((item, key) => `foto-images/user-${userId}/topic-images/${key}`),
+                        `foto-images/user-${userId}`,
                         verified
                     ).then((res) => console.log(res))
                 })
@@ -77,16 +77,17 @@ const EditPhotographerInfor = () => {
                 [topics],
                 skills,
                 allowance,
-                Array.from(images).map((item, key) => `foto-images/user-${auth.currentUser.uid}/topic-images/${key}`),
+                Array.from(images).map((item, key) => `foto-images/user-${userId}/topic-images/${key}`),
                 '',
                 verified
-            ).then((res) => console.log(res))
+            ).then((res) => alert("update success full"))
         }
     }
 
     useEffect(() => {
-        getPhotographer(auth.currentUser.uid)
+        getPhotographer(userId)
             .then((res) => {
+                console.log(res)
                 setFirstName(res.firstName);
                 setLastName(res.lastName);
                 setAccountName(res.accountName);

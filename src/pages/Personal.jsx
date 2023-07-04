@@ -12,7 +12,7 @@ import image1 from "../assets/picture/personalPicture/image_1.png"
 import image2 from "../assets/picture/personalPicture/image_2.png"
 import image3 from "../assets/picture/personalPicture/image_3.png"
 import image4 from "../assets/picture/personalPicture/image_4.png"
-import { auth, getAccountInfor } from "../shared/firebase/firebase";
+import { auth, getAccountInfor, getPhotographer } from "../shared/firebase/firebase";
 
 const colection = [
     {
@@ -84,8 +84,7 @@ const comment = [
 const Personal = () => {
     const [topic, setTopic] = useState(colection[0])
     const { userId } = useParams();
-    // const user = photographer.find(obj => obj._id == userId)
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({});
     const [currnetTopic, setCurrnetTopic] = useState(0);
 
     useEffect(() => {
@@ -94,6 +93,7 @@ const Personal = () => {
                 res.forEach((doc) => {
                     if (doc.data().uid === userId) {
                         setUser(doc.data())
+                        console.log(doc.data())
                     }
                 })
             })
@@ -104,7 +104,7 @@ const Personal = () => {
             {
                 user &&
                 <>
-                    <div className="personal_infomation">
+                    {/* <div className="personal_infomation">
                         <div className="personal_infomation_right">
                             <div className="personal_infomation_right_top">
                                 <div className="personal_avt"><img src={user.thumbnailUrl} alt="" /></div>
@@ -221,7 +221,12 @@ const Personal = () => {
                                 )
                             })}
                         </div>
-                    </div>
+
+                    </div> */}
+                    {
+                        user &&
+                        JSON.stringify(user)
+                    }
                 </>
             }
             {
