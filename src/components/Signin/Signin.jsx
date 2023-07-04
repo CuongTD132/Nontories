@@ -31,6 +31,7 @@ const Signin = () => {
                 
             })
     }
+    const handleSignIn
 
     return (
         <form className="signin">
@@ -48,8 +49,7 @@ const Signin = () => {
             </div>
             <div className="signin_button">
                 <button onClick={handleSignIn}>Đăng nhập</button>
-                <button >Sign in with Google</button>
-                <button onClick={signInWithFacebook}>Sign in with Facebook</button>
+                <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
             </div>
         </form>
     )

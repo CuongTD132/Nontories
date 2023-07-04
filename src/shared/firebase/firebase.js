@@ -44,9 +44,9 @@ const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
     prompt: "select_account"
 });
-const facebookProvider = new FacebookAuthProvider();
 
-const signInWithGoogle = async () => {
+const signInWithGoogle = async (e) => {
+    e.preventDefault();
     const userCredentials = await signInWithPopup(auth, googleProvider)
     const credential = GoogleAuthProvider.credentialFromResult(userCredentials);
     const token = credential.accessToken;
@@ -96,6 +96,7 @@ const signInWithGoogle = async () => {
     }
     return urlRedirect;
 };
+
 const logInWithEmailAndPassword = async (email, password) => {
     try {
         return await signInWithEmailAndPassword(auth, email, password);
@@ -167,36 +168,6 @@ const sendPasswordReset = async (email) => {
 const logout = async () => {
     return await signOut(auth);
 };
-
-const signInWithFacebook = (e) => {
-    e.preventDefault();
-    signInWithPopup(auth, facebookProvider)
-        .then((result) => {
-            const user = result.user;
-            const credential = FacebookAuthProvider.credentialFromResult(result);
-            const accessToken = credential.accessToken;
-            console.log(user)
-            addDoc(collection(db, "users"), {
-                uid: user.uid,
-                name: user.displayName ?? user.uid,
-                authProvider: "local",
-                email: user.email,
-                thumbnailUrl: user.photoURL,
-                role: "temp role"
-            });
-        })
-        .catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = FacebookAuthProvider.credentialFromError(error);
-
-            // ...
-        })
-}
 
 const getAccountInfor = async () => {
     return await getDocs(collection(db, "photographer"));
@@ -337,7 +308,6 @@ export {
     db,
     storage,
     signInWithGoogle,
-    signInWithFacebook,
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,
     sendPasswordReset,
