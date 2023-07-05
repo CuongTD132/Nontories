@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import Find from "../components/Find/Find"
 import PersonalCard from "../components/PersonalCard/PersonalCard";
 import "../styles/findPhotographer.css"
-
-import image from "../assets/picture/findPagePicture/image.png"
-import avt from "../assets/picture//personalPicture/phuongPic.png"
 import { getAllPhotographers } from "../shared/firebase/firebase";
 
 const FindPhotographer = () => {

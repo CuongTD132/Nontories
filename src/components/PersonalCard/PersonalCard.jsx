@@ -13,7 +13,7 @@ const PersonalCard = (props) => {
     useEffect(() => {
         Promise.all([
             props.thumbnailUrl.includes("https://ui-avatars.com/api/") ?
-                setThumbnail(props.thumbnailUrl) :
+                setThumbnail(props.thumbnailUrl + props.name) :
                 getImage(props.thumbnailUrl)
                     .then((res) => setThumbnail(res)),
             getMultipleImages(`foto-images/user-${props.uid}/topic-images/`)

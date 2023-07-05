@@ -23,7 +23,7 @@ const EditPhotographerInfor = () => {
     const [allowance, setAllowance] = useState("");
     const [images, setImages] = useState([]);
     const [pack, setPack] = useState("");
-    const [thumbnail, setThumbnail] = useState();
+    const [thumbnail, setThumbnail] = useState("");
     const [follower, setFollower] = useState(0);
     const [rating, setRating] = useState(0);
     const [connected, setConnected] = useState(0);
@@ -52,7 +52,7 @@ const EditPhotographerInfor = () => {
                         facebook,
                         introdution,
                         pack,
-                        [topics],
+                        topics,
                         skills,
                         allowance,
                         Array.from(images).map((item, key) => `foto-images/user-${userId}/topic-images/${key}`),
@@ -74,11 +74,11 @@ const EditPhotographerInfor = () => {
                 facebook,
                 introdution,
                 pack,
-                [topics],
+                topics,
                 skills,
                 allowance,
                 Array.from(images).map((item, key) => `foto-images/user-${userId}/topic-images/${key}`),
-                '',
+                thumbnail,
                 verified
             ).then((res) => alert("update success full"))
         }

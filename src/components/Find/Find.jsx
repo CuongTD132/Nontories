@@ -59,7 +59,7 @@ const Find = () => {
         <div className="find">
             <div className="find_section">
                 <div>Chủ đề chụp</div>
-                <CheckboxDropdown items={state.items} />
+                <CheckboxDropdown items={state.items}/>
             </div>
             <div className="find_section">
                 <div>Vị trí chụp</div>
