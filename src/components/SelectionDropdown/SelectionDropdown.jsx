@@ -6,8 +6,8 @@ const SelectionDropdown = (props) => {
         props.setRole(role)
     }
     return (
-        <Form.Select onChange={(e) => setSelectRole(e.target.value)} className="sign_feild signup_dropdown" aria-label="Default select example">
-            <option hidden>{props.default}</option>
+        <Form.Select onChange={(e) => setSelectRole(e.target.value)} className="sign_feild signup_dropdown" aria-label="Default select example" disabled={props.disable}>
+            <option value={props.default.content} hidden>{props.default.content}</option>
             {props.list.map((item, key) => {
                 return (
                     <option key={key} value={item.content}>{item.content}</option>

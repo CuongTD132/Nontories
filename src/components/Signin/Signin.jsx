@@ -1,24 +1,38 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../Signin/signin.css"
 import { UserContext } from '../../context/UserContext';
 import { BrowserRouter as Router, Route, Link, NavLink, useNavigate } from "react-router-dom";
-import { getPhotographer, logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithFacebook, signInWithGoogle, authStateListener } from "../../shared/firebase/firebase";
+import { getPhotographer, logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithFacebook, signInWithGoogle, getAccountInfor } from "../../shared/firebase/firebase";
+import { toast } from 'react-toastify';
 
 const Signin = () => {
-    const [email, setEmail ] = useState("");
-    const [password, setPassword ] = useState("");
-    const { updateUser } = useContext(UserContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const { user, updateUser } = useContext(UserContext);
 
     const navigate = useNavigate();
     const handleSignIn = (e) => {
         e.preventDefault();
         logInWithEmailAndPassword(email, password)
             .then((url) => {
-                console.log(url)
-                updateUser(url);
-                navigate(url)
+                if (url) {
+                    updateUser(url)
+                    console.log(url);
+                    // toast("")
+                    navigate("/")
+                } else {
+                    toast.error("Wrong email or password!")
+                }
+
             })
     }
+
+    // useEffect(() => {
+    //     if (!user) {
+    //         navigate("/")
+    //     }
+    // }, [])
+
 
     const handleSignInWithGoogle = (e) => {
         e.preventDefault();
@@ -26,9 +40,9 @@ const Signin = () => {
             .then((userCredential) => {
                 console.log(userCredential)
                 getPhotographer(userCredential.uid).then(res => {
-                navigate(res)
+                    navigate(res)
                 })
-                
+
             })
     }
 

@@ -11,7 +11,6 @@ const Header = () => {
         logout()
             .then(() => navigate("/signIn"))
     }
-    authStateListener()
     return (
         <div className="header">
             <div className="header_navigate">

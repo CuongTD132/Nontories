@@ -56,7 +56,7 @@ const Signup = () => {
             <div className="signup_password">
                 <input onChange={(e) => setPassword(e.target.value)} className="sign_feild" type="password" placeholder="••••••••" />
             </div>
-            <SelectionDropdown setRole={(role) => setRole(role)} default={select.default} list={select.list} />
+            <SelectionDropdown setRole={(role) => setRole(role)} default={select.list[1]} list={select.list} disable={true}/>
             <div className="signup_button">
                 <button onClick={handleSignUp}>Đăng ký</button>
             </div>

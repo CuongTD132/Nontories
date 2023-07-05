@@ -81,12 +81,13 @@
 }
 
 .home_body_picture_left {
-    height: 100%;
+    height: 550px;
     margin-right: 3%;
 }
 
 .home_body_picture_left .picture_left {
-    height: 47%;
+    width: 258px;
+    height: 258px;
 }
 
 .home_body_picture_left .picture2 {
@@ -94,32 +95,31 @@
 }
 
 .home_body_picture_center {
-    width: 28%;
-    height: 100%;
+    height: 550px;
     margin-right: 3%;
 }
 
 .home_body_picture_center .picture_center {
-    width: 100%;
+    width: 380px;
     height: 100%;
 }
 
 .home_body_picture_right {
-    width: 40%;
+    width: 550px;
     position: relative;
 }
 
 .picture_right_top .picture4 {
     position: absolute;
     top: 0;
-    width: 90%;
+    width: 500px;
 }
 
 .picture_right_bottom {
     position: absolute;
     bottom: 0;
     display: flex;
-    width: 90%;
+    width: 500px;
     justify-content: space-between;
 }
 
@@ -160,7 +160,7 @@
 
 @media (max-width: 1300px) {
 
-    .home_banner_left{
+    .home_banner_left {
         width: 700px;
     }
 
@@ -182,6 +182,47 @@
         margin: 50px 0;
     }
 
+    .home_body_picture_center {
+        height: 500px;
+        margin-right: 3%;
+    }
+
+    .home_body_picture_center .picture_center {
+        width: 350px;
+    }
+
+    .home_body_picture_left {
+        height: 500px;
+        margin-right: 3%;
+    }
+
+    .home_body_picture_left .picture_left {
+        width: 220px;
+        height: 238px;
+    }
+
+    .home_body_picture_right {
+        width: 500px;
+        height: 500px;
+        position: relative;
+    }
+
+    .picture_right_top .picture4 {
+        position: absolute;
+        height: 220px;
+        top: 0;
+        width: 400px;
+    }
+
+    .picture_right_bottom {
+        position: absolute;
+        height: 220px;
+        bottom: 0;
+        display: flex;
+        width: 400px;
+        justify-content: space-between;
+    }
+
 }
 
 @media (max-width: 1150px) {
@@ -190,7 +231,7 @@
         justify-content: space-between;
     }
 
-    .home_banner_left{
+    .home_banner_left {
         width: 500px;
     }
 
@@ -199,16 +240,113 @@
         margin: 50px 0;
     }
 
-    .home_banner_right_picture img{
+    .home_banner_right_picture img {
         width: 400px;
+    }
+
+    .home_body_picture {
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    .home_body_picture_left {
+        height: 400px;
+        margin-right: 3%;
+    }
+
+    .home_body_picture_left .picture_left {
+        width: 200px;
+        height: 200px;
+    }
+
+    .home_body_picture_center {
+        height: 425px;
+        margin-right: 3%;
+    }
+
+    .home_body_picture_center .picture_center {
+        width: 300px;
+    }
+
+    .home_body_picture_right {
+        width: 400px;
+        height: 425px;
+        position: relative;
+    }
+
+    .picture_right_top .picture4 {
+        position: absolute;
+        height: 200px;
+        top: 0;
+        width: 350px;
+    }
+
+    .picture_right_bottom {
+        position: absolute;
+        height: 200px;
+        bottom: 0;
+        display: flex;
+        width: 350px;
+        justify-content: space-between;
     }
 
 }
 
 @media (max-width: 1050px) {
 
-    .home_banner_right_picture img{
+    .home_banner_right_picture img {
         width: 300px;
+    }
+
+}
+
+@media (max-width: 1000px) {
+
+    .home_body_picture {
+        width: fit-content;
+        height: fit-content;
+        margin: 20px auto;
+    }
+
+    .home_body_picture_left {
+        height: 300px;
+        margin-right: 3%;
+    }
+
+    .home_body_picture_left .picture_left {
+        width: 150px;
+        height: 150px;
+    }
+
+    .home_body_picture_center {
+        height: 320px;
+        margin-right: 3%;
+    }
+
+    .home_body_picture_center .picture_center {
+        width: 250px;
+    }
+
+    .home_body_picture_right {
+        width: 320px;
+        height: 320px;
+        position: relative;
+    }
+
+    .picture_right_top .picture4 {
+        position: absolute;
+        height: 150px;
+        top: 0;
+        width: 280px;
+    }
+
+    .picture_right_bottom {
+        position: absolute;
+        height: 150px;
+        bottom: 0;
+        display: flex;
+        width: 280px;
+        justify-content: space-between;
     }
 
 }

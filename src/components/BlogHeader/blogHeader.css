@@ -73,6 +73,10 @@
     border-radius: 25px;
 }
 
+.blogHeader .nav_header .dropdown_modal{
+    width: fit-content;
+}
+
 .blogHeader .header_signup:hover{
     color: white;
     background-color: #1a8154;

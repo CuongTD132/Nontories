@@ -14,27 +14,20 @@ import "./blogHeader.css"
 const BlogHeader = () => {
     const { user, updateUser } = useContext(UserContext);
     const navigate = useNavigate();
-    const handleLogin = (e) => {
-        e.preventDefault();
-        logout()
-            .then(() => navigate("/signIn"))
-    }
-
-    console.log(user);
 
     const handleLogout = (e) => {
         e.preventDefault();
         logout()
-        
-          .then(() => {
-            updateUser(null)
-            navigate("/signIn")
-          })
-          .catch((error) => {
-            // Handle any error that occurred during logout
-            console.log("Logout error:", error);
-          });
-      }
+
+            .then(() => {
+                updateUser(null)
+                navigate("/signIn")
+            })
+            .catch((error) => {
+                // Handle any error that occurred during logout
+                console.log("Logout error:", error);
+            });
+    }
 
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -63,7 +56,7 @@ const BlogHeader = () => {
                 </a>
                 {user ? (
                     <div className="nav_header">
-                        <Dropdown show={showDropdown} onToggle={toggleDropdown}>
+                        <Dropdown className="dropdown_modal" show={showDropdown} onToggle={toggleDropdown}>
                             <Dropdown.Toggle className="nav_header_dropdown" variant="secondary" id="dropdown-basic">
                                 <div className="nav_header_avatar">
                                     <img
@@ -76,7 +69,7 @@ const BlogHeader = () => {
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item>
-                                    <Link to="/settings">Settings</Link>
+                                    <Link to="/setting/thong-tin-ca-nhan">Settings</Link>
                                 </Dropdown.Item>
                                 <Dropdown.Item>
                                     <button onClick={handleLogout}>Logout</button>
@@ -85,7 +78,7 @@ const BlogHeader = () => {
                         </Dropdown>
                     </div>
                 ) : (
-                    <Link onClick={handleLogin} to="/signIn" className="header_signup">
+                    <Link to="/signIn" className="header_signup">
                         Đăng nhập
                     </Link>
                 )}
