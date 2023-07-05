@@ -24,6 +24,7 @@ const Header = () => {
     const [user, setUser] = useState(null);
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('user')));
+        window.location.reload()
     }, [])
     return (
         <div className="header">

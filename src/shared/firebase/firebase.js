@@ -165,7 +165,6 @@ const sendPasswordReset = async (email) => {
 };
 
 const logout = async () => {
-    window.location.reload();
     localStorage.removeItem('user')
     return await signOut(auth);
 };

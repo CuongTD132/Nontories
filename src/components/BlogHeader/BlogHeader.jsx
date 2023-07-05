@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 
 import { UserContext } from '../../context/UserContext';
-import { logout, authStateListener, } from "../../shared/firebase/firebase";
+import { logout, authStateListener, getPhotographer, auth, } from "../../shared/firebase/firebase";
 
 import logo from "../../assets/picture/fotovietIcon.png"
 import faceIcon from "../../assets/picture/header_facebook_icon.png"
@@ -17,20 +17,26 @@ const BlogHeader = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         logout()
-            .then(() => navigate("/signIn"))
+            .then(() => {
+                navigate("/signIn")
+                window.location.reload()
+            })
     }
 
     const [user, setuser] = useState(null);
     useEffect(() => {
-        setuser(JSON.parse(localStorage.getItem('user')))
+        if(auth.currentUser) {
+            getPhotographer(auth.currentUser.uid)
+                .then((res) => setuser(res))
+        }
     }, [])
 
     const handleLogout = (e) => {
         e.preventDefault();
         logout()
           .then(() => {
-            // updateUser(null)
             navigate("/signIn")
+            window.location.reload()
           })
           .catch((error) => {
             // Handle any error that occurred during logout

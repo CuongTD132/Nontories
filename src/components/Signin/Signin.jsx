@@ -15,6 +15,7 @@ const Signin = () => {
                 getPhotographer(res.user.uid)
                     .then((res) => localStorage.setItem('user', JSON.stringify(res)))
                 navigate(`/personal/${res.user.uid}`)
+                window.location.reload();
             })
     }
 
@@ -22,8 +23,6 @@ const Signin = () => {
         e.preventDefault();
         signInWithGoogle()
             .then(() => {
-                getPhotographer(auth.currentUser.uid)
-                    .then((res) => localStorage.setItem('user', JSON.stringify(res)))
                 navigate(`/personal/${auth.currentUser.uid}`)
             })
     }
