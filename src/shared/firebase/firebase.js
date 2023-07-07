@@ -303,6 +303,92 @@ const authStateListener = onAuthStateChanged(auth, (user) => {
     }
   });
 
+
+//@param topics : Array<String> topics
+//@returns list of users that have topic is filtered
+const filterTopic = async (topics) => {
+    const querySnapshot = await getDocs(collection(db, "photographer"))
+    const users = querySnapshot.docs.map(ref => ref.data())
+    const usersFiltered = users.filter((user) => {
+        const containsAny = topics.some(item => user.topics.includes(item));
+        if(containsAny.length > 0) return user;
+    })
+    return usersFiltered;
+}
+
+
+//@param salary : number
+//@returns list of users have salary lower than expect salary
+const filterSalary = async (salary) => {
+    const querySnapshot = await getDocs(collection(db, "photographer"))
+    const users = querySnapshot.docs.map(ref => ref.data())
+    const usersFiltered = users.filter((user) => {
+        if(user.allowance <= salary) return user;
+    })
+    return usersFiltered;
+}
+
+//@param workLocation : string
+//returns return user have workLocation same with search value
+const filterWorkLocation = async (workLocation) => {
+    const querySnapshot = await getDocs(collection(db, "photographer"))
+    const users = querySnapshot.docs.map(ref => ref.data())
+    const usersFiltered = users.filter((user) => {
+        if(user.workLocations == workLocation) return user;
+    })
+    return usersFiltered;
+}
+
+//@param uid : string
+//@returns status of account : true/false
+const checkVerified = async (uid) => {
+    let photographer;
+    const q = query(collection(db, "photographer"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        if(photographer.uid == uid) {
+            photographer = doc.data()
+        }
+    });
+    return photographer.verified;
+}
+
+
+//@param uid : string
+//@returns account is in photoPro license or not : string
+const getPhotoLicense = async (uid) => {
+    let photographer;
+    const q = query(collection(db, "photographer"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        if(photographer.uid == uid) {
+            photographer = doc.data()
+        }
+    });
+    return photographer.pack ?? "Chưa nâng cấp PhotoPro";
+}
+
+
+//param verified : boolean
+//returns updated status
+const updateVerifyStatus = async (verified) => {
+    const querySnapshot = await getDocs(collection(db, "photographer"));
+    let docId;
+    querySnapshot.docs
+        .forEach((item) => {
+            if (`${item.data().uid} : ${auth.currentUser.uid}`) {
+                docId = item.id
+            }
+        });
+
+    return await updateDoc(
+        doc(db, "photographer", docId),
+        {
+            verified: verified
+        }
+    )
+}
+
 export {
     auth,
     db,
@@ -321,4 +407,10 @@ export {
     getImage,
     getMultipleImages,
     authStateListener,
+    filterTopic,
+    filterSalary,
+    filterWorkLocation,
+    checkVerified,
+    getPhotoLicense,
+    updateVerifyStatus,
 };
