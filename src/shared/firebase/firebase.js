@@ -355,7 +355,7 @@ const checkVerified = async (uid) => {
 
 
 //@param uid : string
-//@returns account is in photoPro license or not : string
+//@returns account is in photoPro paid or not : string
 const getPhotoLicense = async (uid) => {
     let photographer;
     const q = query(collection(db, "photographer"));
