@@ -411,38 +411,30 @@ const updatePackStatus = async (pack, uid) => {
 const deleteImage = async (uid, topic, images) => {
     const querySnapshot = await getDocs(collection(db, "photographer"));
     let docId;
-    const data = querySnapshot.docs
-        .forEach((item) => {
-            if (item.data().uid === uid) {
-                docId = item.id
-            }
-        });
-
-    return await updateDoc(
-        doc(db, "photographer", docId),
-        {
-            images: [
-                data.images.filter((imageSet) => {
-                    return imageSet.topic !== topic
-                }),
-                {
-                    topic: topic,
-                    links: images
-                    /**
-                     * Sample data:
-                     * {
-                     *  topic: "Name of topic",
-                     *  links: [
-                     *     "firestore-path/image1.png",
-                     *     "firestore-path/image2.png",
-                     *  ]
-                     * }
-                     */
-                }
-            ]
-        }
-    )
-}
+    let data;
+  
+    querySnapshot.docs.forEach((item) => {
+      if (item.data().uid === uid) {
+        docId = item.id;
+        data = item.data();
+      }
+    });
+  
+    const updatedImages = data.images.map((imageSet) => {
+      if (imageSet.topic === topic) {
+        return {
+          topic: topic,
+          links: images
+        };
+      } else {
+        return imageSet;
+      }
+    });
+  
+    return await updateDoc(doc(db, "photographer", docId), {
+      images: updatedImages
+    });
+  };
 
 const deleteTopics = async (uid, topic) => {
     const querySnapshot = await getDocs(collection(db, "photographer"));
