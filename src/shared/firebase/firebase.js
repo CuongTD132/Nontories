@@ -464,6 +464,20 @@ const deleteTopics = async (uid, topic) => {
     )
 }
 
+const getImagesByUidAndTopic = async (uid, topic) => {
+    const querySnapshot = await getDocs(collection(db, "photographer"));
+    let images = [];
+
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.uid === uid) {
+            images = data.images.find((imageSet) => imageSet.topic === topic)?.links || [];
+        }
+    });
+
+    return images;
+};
+
 export {
     auth,
     db,
@@ -490,5 +504,6 @@ export {
     updateVerifyStatus,
     updatePackStatus,
     deleteImage,
-    deleteTopics
+    deleteTopics,
+    getImagesByUidAndTopic
 };
