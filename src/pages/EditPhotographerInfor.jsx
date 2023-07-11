@@ -23,7 +23,7 @@ const EditPhotographerInfor = () => {
     const [allowance, setAllowance] = useState("");
     const [images, setImages] = useState([]);
     const [pack, setPack] = useState("");
-    const [thumbnail, setThumbnail] = useState("");
+    const [thumbnailUrl, setThumbnailUrl] = useState("");
     const [follower, setFollower] = useState(0);
     const [rating, setRating] = useState(0);
     const [connected, setConnected] = useState(0);
@@ -33,11 +33,42 @@ const EditPhotographerInfor = () => {
 
     const {userId} = useParams();
     const updateInfor = async () => {
+        let newData = {}
+        if (firstName !== '') {
+            newData.firstName = firstName;
+        }
+        if (lastName !== '') {
+            newData.lastName = lastName;
+        }
+        if (accountName !== '') {
+            newData.accountName = accountName;
+        }
+        if (nameInIDCard !== '') {
+            newData.nameInIDCard = nameInIDCard;
+        }
+        if (thumbnailUrl !== '') {
+            newData.thumbnailUrl = thumbnailUrl;
+        }
+        if (follower !== '') {
+            newData.follower = follower;
+        }
+        if (rating !== '') {
+            newData.rating = rating;
+        }
+        if (topics !== '') {
+            newData.topics = topics;
+        }
+        if (connected !== '') {
+            newData.connected = connected;
+        }
+        if (lastOrder !== '') {
+            newData.lastOrder = lastOrder;
+        }
         console.log(images)
         let index = 0;
         await uploadMultipleFiles(images)
-        if (thumbnail) {
-            uploadFile(thumbnail)
+        if (thumbnailUrl) {
+            uploadFile(thumbnailUrl)
                 .then(() => {
                     updateInforPhotographer(
                         firstName,
@@ -78,7 +109,7 @@ const EditPhotographerInfor = () => {
                 skills,
                 allowance,
                 Array.from(images).map((item, key) => `foto-images/user-${userId}/topic-images/${key}`),
-                thumbnail,
+                thumbnailUrl,
                 verified
             ).then((res) => alert("update success full"))
         }
@@ -92,7 +123,7 @@ const EditPhotographerInfor = () => {
                 setLastName(res.lastName);
                 setAccountName(res.accountName);
                 setNameInIDCard(res.nameInIDCard);
-                setThumbnail(res.thumbnailURL);
+                setThumbnailUrl(res.thumbnailURL);
                 setFollower(res.follower);
                 setRating(res.rating);
                 setPack(res.pack);
@@ -121,7 +152,7 @@ const EditPhotographerInfor = () => {
                 <div className="infor__personal">
                     <div className="text-field">
                         <label htmlFor="">Sua anh ho so</label>
-                        <input type="file" onChange={(e) => setThumbnail(e.target.files[0])} />
+                        <input type="file" onChange={(e) => setThumbnailUrl(e.target.files[0])} />
                     </div>
                     <div className="text-field">
                         <label htmlFor="">First Name</label>

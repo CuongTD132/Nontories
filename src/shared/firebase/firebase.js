@@ -110,7 +110,7 @@ const registerWithEmailAndPassword = async (
             (result) => {
                 const user = result.user;
                 if (role === "Thợ chụp ảnh cần tìm kiếm khách hàng") {
-                    addDoc(collection(db, 'photographer'), {
+                    addDoc(collection(db, 'testPhoto'), {
                         uid: user.uid,
                         name: `${firstName} ${lastName}`,
                         firstName: firstName,
@@ -134,19 +134,19 @@ const registerWithEmailAndPassword = async (
                         introdution: "",
                         topics: [],
                         skills: [],
-                        allowance: "",
+                        allowance: 0.0,
                         images: [],
                         verified: false
                     },)
                 } else {
-                    addDoc(collection(db, "users"), {
-                        uid: user.uid,
-                        name: `${firstName} ${lastName}`,
-                        email: user.email ?? null,
-                        role: role,
-                        thumbnailUrl: user.photoURL ?? null,
-                        address: null,
-                    });
+                    // addDoc(collection(db, "users"), {
+                    //     uid: user.uid,
+                    //     name: `${firstName} ${lastName}`,
+                    //     email: user.email ?? null,
+                    //     role: role,
+                    //     thumbnailUrl: user.photoURL ?? null,
+                    //     address: null,
+                    // });
                 }
             }
         ).catch(err => console.error(err));
@@ -196,26 +196,27 @@ const getAllPhotographers = async () => {
 }
 
 const updateInforPhotographer = async (
-    firstName,
-    lastName,
-    accountName,
-    nameInIDCard,
-    numberIDCard,
-    phone,
-    workLocations,
-    address,
-    instagram,
-    facebook,
-    introdution,
-    pack,
-    topics,
-    skills,
-    allowance,
-    images,
-    thumbnailUrl,
-    verified
+    // firstName,
+    // lastName,
+    // accountName,
+    // nameInIDCard,
+    // numberIDCard,
+    // phone,
+    // workLocations,
+    // address,
+    // instagram,
+    // facebook,
+    // introdution,
+    // pack,
+    // topics,
+    // skills,
+    // allowance,
+    // images,
+    // thumbnailUrl,
+    // verified
+    data
 ) => {
-    const querySnapshot = await getDocs(collection(db, "photographer"));
+    const querySnapshot = await getDocs(collection(db, "testPhoto"));
     let docId;
     querySnapshot.docs
         .forEach((item) => {
@@ -226,32 +227,33 @@ const updateInforPhotographer = async (
 
     console.log(docId);
     return await updateDoc(
-        doc(db, "photographer", docId),
+        doc(db, "testPhoto", docId),
         {
-            name: `${firstName} ${lastName}`,
-            firstName: firstName,
-            lastName: lastName,
-            accountName: accountName,
-            nameInIDCard: nameInIDCard,
-            thumbnailUrl: thumbnailUrl !== '' ? thumbnailUrl : `https://ui-avatars.com/api/${firstName}`,
-            follower: 0,
-            rating: 5.0,
-            topics: topics,
-            pack: pack,
-            connected: 0,
-            lastOrder: new Date(),
-            comments: [],
-            numberIDCard: numberIDCard,
-            phone: phone,
-            workLocations: workLocations,
-            address: address,
-            instagram: instagram,
-            facebook: facebook,
-            introdution: introdution,
-            skills: skills,
-            allowance: allowance,
-            images: images,
-            verified: verified
+            // name: `${firstName} ${lastName}`,
+            // firstName: firstName,
+            // lastName: lastName,
+            // accountName: accountName,
+            // nameInIDCard: nameInIDCard,
+            // thumbnailUrl: thumbnailUrl !== '' ? thumbnailUrl : `https://ui-avatars.com/api/${firstName}`,
+            // follower: 0,
+            // rating: 5.0,
+            // topics: topics,
+            // pack: pack,
+            // connected: 0,
+            // lastOrder: new Date(),
+            // comments: [],
+            // numberIDCard: numberIDCard,
+            // phone: phone,
+            // workLocations: workLocations,
+            // address: address,
+            // instagram: instagram,
+            // facebook: facebook,
+            // introdution: introdution,
+            // skills: skills,
+            // allowance: allowance,
+            // images: images,
+            // verified: verified
+            data
         }
     )
 }
